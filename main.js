@@ -45,7 +45,7 @@ app.whenReady().then(() => {
   session.defaultSession.webRequest.onBeforeSendHeaders(
     { urls: ["*://*/*"] },
     (beforeSendResponse, callback) => {
-      // beforeSendResponse.requestHeaders.Origin = `https://example.com`;
+      beforeSendResponse.requestHeaders.Origin = `https://example.com`;
       log.warn("onBeforeSendHeaders", beforeSendResponse.url);
       callback({ cancel: false, requestHeaders: beforeSendResponse.requestHeaders });
     }
