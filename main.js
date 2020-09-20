@@ -1,6 +1,9 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, session } = require("electron");
+const log = require('electron-log')
 const path = require("path");
+
+log.transports.console.level = 'silly';
 
 function createWindow() {
   // Create the browser window.
@@ -34,7 +37,7 @@ app.whenReady().then(() => {
   session.defaultSession.webRequest.onBeforeRequest(
     { urls: ["*://*/*"] },
     (response, callback) => {
-      console.log("onBeforeRequest", response.url);
+      log.warn("onBeforeRequest", response.url);
       callback({ cancel: false });
     }
   );
@@ -43,7 +46,7 @@ app.whenReady().then(() => {
     { urls: ["*://*/*"] },
     (beforeSendResponse, callback) => {
       // beforeSendResponse.requestHeaders.Origin = `https://example.com`;
-      console.log("onBeforeSendHeaders", beforeSendResponse.url);
+      log.warn("onBeforeSendHeaders", beforeSendResponse.url);
       callback({ cancel: false, requestHeaders: beforeSendResponse.requestHeaders });
     }
   );

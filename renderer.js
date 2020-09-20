@@ -25,10 +25,15 @@ async function run() {
   await ready();
   await navigator.serviceWorker.register("sw.js");
 
-  const res = await fetch("https://demo-sw-api.jimminikin.vercel.app/?serviceWorker", {
+  const resBypass = await fetch("https://demo-sw-api.jimminikin.vercel.app/?bypassSW", {
     method: "POST",
   }).then((res) => res.json());
-  console.log("Result from renderer", res);
+  console.log("Result from renderer, SW bypassed", resBypass);
+
+  const resHandled = await fetch("https://demo-sw-api.jimminikin.vercel.app/", {
+    method: "POST",
+  }).then((res) => res.json());
+  console.log("Result from renderer, SW handled", resHandled);
 }
 
 window.addEventListener("load", (event) => {
